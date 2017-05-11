@@ -20,5 +20,7 @@ print(log_dict['timestamp'])  # 2017-05-10T06:45:29+00:00
 print(log_dict['hostname'])   # host
 print(log_dict['appname'])    # app
 print(log_dict['procname'])   # web.3
-print(log_dict['procname'])   # State changed from starting to up
+print(log_dict['msg'])        # State changed from starting to up
 ```
+
+`msg` can be parsed further with the [logfmt package](https://pypi.python.org/pypi/logfmt/0.1)

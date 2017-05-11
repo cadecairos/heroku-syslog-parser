@@ -1,7 +1,7 @@
 from distutils.core import setup
 setup(
   name = 'heroku-syslog-parser',
-  packages = ['heroku-syslog-parser'],
+  packages = ['heroku_syslog_parser'],
   version = '0.0.1',
   description = 'A tool for parsing rfc5424 formatted syslog messages from Heroku',
   author = 'Chris De Cairos',

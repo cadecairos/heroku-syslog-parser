@@ -38,3 +38,13 @@ class HerokuLogParser(object):
             (k, getattr(groups, k))
             for k in self.__slots__
         )
+
+    @classmethod
+    def parse_dict(self, dict_string):
+        try:
+            print(dict_string)
+            resp = parser.parse_dict.parseString(dict_string)
+            print(resp)
+            return resp.asDict()
+        except pyparsing.ParseException:
+            raise ParseError('unable to parse to dict', log_string)

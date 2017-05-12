@@ -1,5 +1,3 @@
-# <40>1 2012-11-30T06:45:29+00:00 host app web.3 - State changed from starting to up
-
 from pyparsing import (
     Combine,
     Suppress,
@@ -7,6 +5,8 @@ from pyparsing import (
     Literal,
     White,
     Optional,
+    dictOf,
+    alphanums,
     nums,
     printables,
     restOfLine,
@@ -22,6 +22,7 @@ LESS_THAN = Literal('<')
 GREATER_THAN = Literal('>')
 PERIOD = Literal('.')
 TEE = Literal('T')
+UNDERSCORE = Literal('_')
 
 # convert values to integers
 def toInt(s, loc, toks):
@@ -83,4 +84,21 @@ heroku_syslog_message = (pri.setResultsName('pri')
                          + msg.setResultsName('msg')
                          + lineEnd)
 
-__all__ = ['heroku_syslog_message']
+# Parse "key=value key=value key="value" key='value'" into a dict
+ignore_quotes = Optional(Suppress(Word('"\'')))
+label_word = Word(alphanums)
+attr_label = Combine(
+    label_word,
+    UNDERSCORE,
+    label_word
+)
+attr_value = Combine(
+    Suppress('=')
+    + ignore_quotes
+    + Word(printables)
+    + ignore_quotes
+)
+
+parse_dict = dictOf(attr_label, attr_value)
+
+__all__ = ['heroku_syslog_message', 'parse_dict']

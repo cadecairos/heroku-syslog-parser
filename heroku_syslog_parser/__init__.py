@@ -1,6 +1,6 @@
 from .message import HerokuLogParser, ParseError
 
-version_info = (0, 0, 1)
+version_info = (0, 0, 2)
 __version__ = '.'.join(map(str, version_info))
 __author__ = 'Chris De Cairos <chris@chrisdecairos.ca>'
 

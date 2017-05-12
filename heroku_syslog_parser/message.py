@@ -42,9 +42,6 @@ class HerokuLogParser(object):
     @classmethod
     def parse_dict(self, dict_string):
         try:
-            print(dict_string)
-            resp = parser.parse_dict.parseString(dict_string)
-            print(resp)
-            return resp.asDict()
+            return parser.parse_dict.parseString(dict_string).asDict()
         except pyparsing.ParseException:
             raise ParseError('unable to parse to dict', log_string)

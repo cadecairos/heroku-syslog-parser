@@ -6,6 +6,7 @@ from pyparsing import (
     White,
     Optional,
     dictOf,
+    srange,
     alphanums,
     nums,
     printables,
@@ -23,6 +24,7 @@ GREATER_THAN = Literal('>')
 PERIOD = Literal('.')
 TEE = Literal('T')
 UNDERSCORE = Literal('_')
+STRIP_QUOTES = Optional(Suppress(Word('"\'')))
 
 # convert values to integers
 def toInt(s, loc, toks):
@@ -85,18 +87,12 @@ heroku_syslog_message = (pri.setResultsName('pri')
                          + lineEnd)
 
 # Parse "key=value key=value key="value" key='value'" into a dict
-ignore_quotes = Optional(Suppress(Word('"\'')))
-label_word = Word(alphanums)
-attr_label = Combine(
-    label_word,
-    UNDERSCORE,
-    label_word
-)
+attr_label = Word(srange('[a-zA-Z0-9_]'))
 attr_value = Combine(
     Suppress('=')
-    + ignore_quotes
+    + STRIP_QUOTES
     + Word(printables)
-    + ignore_quotes
+    + STRIP_QUOTES
 )
 
 parse_dict = dictOf(attr_label, attr_value)
